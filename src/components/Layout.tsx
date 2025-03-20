@@ -27,6 +27,14 @@ const fadeIn = {
 export default function Layout({ children, onNavigate }: LayoutProps) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
+  const handleExploreClick = () => {
+    const revenueEngineSection = document.getElementById('revenue-engine');
+    if (revenueEngineSection) {
+      revenueEngineSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-black text-white grain">
       <motion.nav 
@@ -44,10 +52,10 @@ export default function Layout({ children, onNavigate }: LayoutProps) {
             <div className="hidden md:flex md:items-center md:gap-x-8">
               <NavLink to="home" onClick={() => onNavigate('home')}>Home</NavLink>
               <NavLink to="case-studies" onClick={() => onNavigate('case-studies')}>Case Studies</NavLink>
-              <NavLink to="offers" onClick={() => onNavigate('offers')}>Offers</NavLink>
+              <NavLink to="revenue-engine" onClick={() => onNavigate('revenue-engine')}>Offers</NavLink>
               <NavLink to="about" onClick={() => onNavigate('about')}>About Us</NavLink>
               <button
-                onClick={() => onNavigate('offers')}
+                onClick={handleExploreClick}
                 className="button-primary bg-opacity-90 hover:bg-opacity-80 transition-all duration-300"
               >
                 <span>Explore Offers</span>
@@ -78,11 +86,11 @@ export default function Layout({ children, onNavigate }: LayoutProps) {
             <div className="space-y-2 px-4 py-6">
               <NavLink to="home" onClick={() => { onNavigate('home'); setIsMenuOpen(false); }}>Home</NavLink>
               <NavLink to="case-studies" onClick={() => { onNavigate('case-studies'); setIsMenuOpen(false); }}>Case Studies</NavLink>
-              <NavLink to="offers" onClick={() => { onNavigate('offers'); setIsMenuOpen(false); }}>Offers</NavLink>
+              <NavLink to="revenue-engine" onClick={() => { onNavigate('revenue-engine'); setIsMenuOpen(false); }}>Offers</NavLink>
               <NavLink to="about" onClick={() => { onNavigate('about'); setIsMenuOpen(false); }}>About Us</NavLink>
               <div className="pt-4">
                 <button
-                  onClick={() => { onNavigate('offers'); setIsMenuOpen(false); }}
+                  onClick={handleExploreClick}
                   className="w-full button-primary bg-opacity-90 hover:bg-opacity-80 transition-all duration-300"
                 >
                   <span>Explore Offers</span>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { useMediaQuery } from 'react-responsive';
 
 const LetterAnimation = ({ 
   children, 
@@ -63,17 +64,24 @@ const LetterAnimation = ({
 };
 
 export default function Home() {
-  const heroText = [
-    "We",
-    "don't",
-    "automate",
-    "for",
-    "you,",
-    "we",
-    "automate",
-    "with",
-    "you"
+  const heroTextDesktop = [
+    "Your",
+    "Partner",
+    "in",
+    "Sales",
+    "Automation"
   ];
+
+  const heroTextMobile = [
+    "Your",
+    "Partner",
+    "in",
+    "Sales",
+    "Automation"
+  ];
+
+  const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
+  const heroText = isMobile ? heroTextMobile : heroTextDesktop;
 
   const [initialAnimationComplete, setInitialAnimationComplete] = useState(false);
   const [currentGlowIndex, setCurrentGlowIndex] = useState(-1);
@@ -119,6 +127,13 @@ export default function Home() {
     button.style.setProperty('--mouse-y', `${y}%`);
   };
 
+  const handleConnectClick = () => {
+    const formElement = document.querySelector('[data-tally-src]');
+    if (formElement) {
+      formElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   let globalLetterIndex = -1;
 
   return (
@@ -126,12 +141,12 @@ export default function Home() {
       <div className="depth-gradient" />
       <div className="noise absolute inset-0" />
       
-      <div className="relative z-10 mx-auto max-w-[95rem] text-center">
-        <div className="space-y-8 select-none">
-          <h1 className="relative mx-auto max-w-[64rem] font-sans text-6xl font-bold leading-[1.1] tracking-[-0.02em] sm:text-7xl lg:text-8xl">
+      <div className="relative z-10 mx-auto text-center">
+        <div className="space-y-12 select-none">
+          <h1 className={`relative mx-auto ${isMobile ? 'max-w-[40rem] text-5xl leading-[1.3] tracking-[-0.01em]' : 'max-w-[95rem] text-6xl leading-[1.15] tracking-[0.02em]'} font-sans font-bold sm:text-7xl lg:text-8xl`}>
             {heroText.map((word, wordIndex) => (
               <React.Fragment key={wordIndex}>
-                <span className="inline-block">
+                <span className="inline-block mx-[0.08em]">
                   {word.split('').map((letter, letterIndex) => {
                     globalLetterIndex++;
                     return (
@@ -148,7 +163,7 @@ export default function Home() {
                   })}
                 </span>
                 {' '}
-                {(wordIndex === 4 || wordIndex === 2) && <br className="hidden sm:block" />}
+                {(wordIndex === 3 && !isMobile) && <br className="hidden sm:block" />}
               </React.Fragment>
             ))}
           </h1>
@@ -157,9 +172,12 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.25, duration: 0.8 }}
-            className="mx-auto max-w-2xl text-xl text-white/70"
+            className="mx-auto max-w-4xl text-xl sm:text-2xl text-white/70 leading-relaxed"
           >
-            Leveraging quantitative trading expertise and cutting-edge AI, we build enterprise-grade automation systems that streamline operations, boost efficiency, and deliver measurable ROI within weeks.
+            {isMobile 
+              ? "Scale faster, smarter, and more efficiently by integrating with Firelink's AI-powered sales systems, specifically designed to supercharge your team's results."
+              : "Scale faster, smarter, and more efficiently by integrating with Firelink's AI-powered sales systems, specifically designed to supercharge your team's results."
+            }
           </motion.p>
 
           <motion.div 
@@ -169,14 +187,14 @@ export default function Home() {
             className="flex justify-center"
           >
             <motion.button 
-              onClick={() => document.getElementById('offers')?.scrollIntoView({ behavior: 'smooth' })} 
+              onClick={handleConnectClick}
               onMouseMove={handleMouseMove}
-              className="button-primary"
+              className="button-primary text-lg px-10 py-4"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               <span className="flex items-center gap-2">
-                Explore Offers <ArrowRight className="h-4 w-4" />
+                Let's Connect <ArrowRight className="h-5 w-5" />
               </span>
             </motion.button>
           </motion.div>
